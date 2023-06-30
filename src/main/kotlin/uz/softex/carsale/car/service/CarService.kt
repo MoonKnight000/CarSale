@@ -9,5 +9,5 @@ fun getAllCars():ApiResponseGeneric<*>
 fun getById(id:Int):ApiResponseGeneric<*>
 fun addCar(dto: CarDto):ApiResponse
 fun updateCar(dto:CarDto):ApiResponse
-fun deleteCar(ic:Int)
+fun deleteCar(id:Int):ApiResponse
 }

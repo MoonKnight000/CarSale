@@ -37,10 +37,17 @@ class CarServiceImp(
 
     override fun updateCar(dto: CarDto): ApiResponse {
         val orElseThrow = repository.findById(dto.id!!).orElseThrow { throw CarNotFound() }
-        val model = carModelRepository.findById(dto.carModel!!)
+        val model = carModelRepository.findById(dto.carModel!!).orElseThrow { throw CarModelNotFound() }
+        orElseThrow.color = dto.color
+        orElseThrow.model = model
+        orElseThrow.price = dto.price
+        repository.save(orElseThrow)
+        return ApiResponse()
     }
 
-    override fun deleteCar(ic: Int) {
-        TODO("Not yet implemented")
+    override fun deleteCar(id: Int): ApiResponse {
+        if (!repository.existsById(id)) throw CarNotFound()
+        repository.deleteById(id)
+        return ApiResponse()
     }
 }
