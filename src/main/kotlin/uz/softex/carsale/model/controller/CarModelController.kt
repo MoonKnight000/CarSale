@@ -3,6 +3,7 @@ package uz.softex.carsale.model.controller
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -35,16 +36,19 @@ class CarModelController(private val service: ModelService) {
         return ResponseEntity.ok(service.getCompanyCarModels())
     }
 
+    @PreAuthorize(value = "hasAuthority('ADD_CAR_MODEL')")
     @PostMapping("/add")
-    fun add(@RequestBody  dto: ModelDto): ResponseEntity<ApiResponse> {
+    fun add(@RequestBody dto: ModelDto): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.addModel(dto))
     }
 
+    @PreAuthorize(value = "hasAuthority('ADD_CAR_MODEL')")
     @PatchMapping("/update")
-    fun update(@RequestBody  dto: ModelDto): ResponseEntity<ApiResponse> {
+    fun update(@RequestBody dto: ModelDto): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.updateModel(dto))
     }
 
+    @PreAuthorize(value = "hasAuthority('DELETE_CAR_MODEL')")
     @DeleteMapping("/delete/{id}")
     fun delete(@PathVariable id: Int): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.deleteModel(id))

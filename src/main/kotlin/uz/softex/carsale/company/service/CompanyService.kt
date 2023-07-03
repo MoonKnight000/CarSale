@@ -10,8 +10,10 @@ interface CompanyService {
     fun getAllCompany(): ApiResponseGeneric<*>
     fun getById(id: Int): ApiResponseGeneric<*>
     fun getMyCompany(): ApiResponseGeneric<*>
-    fun addCompany(dto: CompanyDto, file: MultipartFile): ApiResponse
-    fun updateCompany(dto: CompanyDto, file: MultipartFile): ApiResponse
+    fun addCompany(dto: CompanyDto): ApiResponse
+    fun updateCompany(dto: CompanyDto): ApiResponse
     fun deleteCompany(id: Int): ApiResponse
     fun getLogo(response: HttpServletResponse, companyId: Int)
+    fun addLogo(id: Int, file: MultipartFile):ApiResponse
+    fun updateLogo(id: Int, file: MultipartFile):ApiResponse
 }

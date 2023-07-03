@@ -14,6 +14,6 @@ class CompanyDto(
         company.name,
         company.phoneNumber,
         company.address?.map { it.id!! },
-        company.image!!.id
+        company.image?.id
     )
 }

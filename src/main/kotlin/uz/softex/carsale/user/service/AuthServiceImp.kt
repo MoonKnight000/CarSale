@@ -20,7 +20,6 @@ import uz.softex.carsale.user.repository.UsersRepository
 @Service
 class AuthServiceImp(
     private val repository: UsersRepository,
-    private val companyRepository: CompanyRepository,
     private val filter: JWTProvider,
     private val encoder: PasswordEncoder,
     private val positionRepository: PositionRepository
@@ -33,11 +32,7 @@ class AuthServiceImp(
             throw UserExists()
         users.login = dto.login
         users.parol = encoder.encode(dto.parol)
-        if(dto.position!=null)
-        users.position = positionRepository.findById(dto.position!!).orElseThrow { throw PositionNotFound() }
-        if(dto.workCompany!=null)
-        users.workCompany = companyRepository.findById(dto.workCompany?:0).orElseThrow { throw CompanyNotFound() }
-        users.enabled = users.position==null
+        users.position = positionRepository.findById(3).orElseThrow { throw PositionNotFound() }
         repository.save(users)
         return ApiResponse()
     }

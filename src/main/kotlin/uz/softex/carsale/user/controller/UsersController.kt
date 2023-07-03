@@ -22,20 +22,20 @@ import uz.softex.carsale.user.service.UsersService
 
 class UsersController(private val service: UsersService) {
     @PreAuthorize(value = "hasAuthority('ENABLE_USERS')")
-    @PostMapping("/enableUsers/{id}")
-    fun enableUsers(@PathVariable id: Int, @RequestParam enable: Boolean): ResponseEntity<ApiResponse> {
-        return ResponseEntity.ok(service.enableUsers(id, enable))
+    @PostMapping("/addUser")
+    fun enableUsers(@RequestBody dto: UsersDto): ResponseEntity<ApiResponse> {
+        return ResponseEntity.ok(service.addUser(dto))
     }
 
     @PreAuthorize(value = "hasAuthority('GET_ALL_USERS_BY_COMPANY')")
     @GetMapping("/getAllUsersByCompany")
-    fun getUsers(): ResponseEntity<ApiResponseGeneric<List<Users>>> {
+    fun getUsers(): ResponseEntity<ApiResponseGeneric<*>> {
         return ResponseEntity.ok(service.getAllUsersByCompany())
     }
 
     @PreAuthorize(value = "hasAuthority('GET_USERS_BY_ID')")
     @GetMapping("/getUSerById/{id}")
-    fun getUserById(@PathVariable id: Int): ResponseEntity<ApiResponseGeneric<Users>> {
+    fun getUserById(@PathVariable id: Int): ResponseEntity<*> {
         return ResponseEntity.ok(service.getUserById(id))
     }
 

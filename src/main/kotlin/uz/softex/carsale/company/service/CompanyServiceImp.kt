@@ -1,6 +1,7 @@
 package uz.softex.carsale.company.service
 
 import jakarta.servlet.http.HttpServletResponse
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import org.springframework.util.FileCopyUtils
 import org.springframework.web.multipart.MultipartFile
@@ -17,6 +18,9 @@ import uz.softex.carsale.payload.ApiResponseGeneric
 import uz.softex.carsale.user.service.AuthService
 import java.io.File
 import java.io.FileInputStream
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 
 @Service
 class CompanyServiceImp(
@@ -40,16 +44,10 @@ class CompanyServiceImp(
         return ApiResponseGeneric(CompanyDto(authService.getCurrentUser().workCompany ?: throw CompanyNotFound()))
     }
 
-    override fun addCompany(dto: CompanyDto, file: MultipartFile): ApiResponse {
-        val image = SaveImage()
-        image.type = file.contentType
-        image.name = "${dto.name}.${file.contentType!!.split("/")[1]}"
-        image.path = "F:\\CarSaleImages\\CompanyLogos/${image.name}"
-        imageRepository.save(image)
+    override fun addCompany(dto: CompanyDto): ApiResponse {
         val company = Company()
         company.name = dto.name
         company.address = mutableListOf()
-        company.image = image
         dto.address!!.forEach {
             company.address!!.add(addressRepository.findById(it).orElseThrow { throw AddressNotFound() })
         }
@@ -58,15 +56,8 @@ class CompanyServiceImp(
         return ApiResponse()
     }
 
-    override fun updateCompany(dto: CompanyDto, file: MultipartFile): ApiResponse {
+    override fun updateCompany(dto: CompanyDto): ApiResponse {
         val company = repository.findById(dto.id!!).orElseThrow { throw CompanyNotFound() }
-        val deleteFile = File("F:\\CarSaleImages\\CompanyLogos/${company.image!!.name}")
-        deleteFile.delete()
-        val image = SaveImage()
-        image.type = file.contentType
-        image.name = "${dto.name}.${file.contentType!!.split("/")[1]}"
-        image.path = "F:\\CarSaleImages\\CompanyLogos/${image.name}"
-        imageRepository.save(image)
         company.name = dto.name
         dto.address!!.forEach {
             company.address!!.add(addressRepository.findById(it).orElseThrow { throw AddressNotFound() })
@@ -88,5 +79,36 @@ class CompanyServiceImp(
         response.setHeader("Content-Disposition", "attachment; filename=\"${image!!.name}\"");
         response.contentType = image.type
         FileCopyUtils.copy(FileInputStream("F:\\CarSaleImages\\CompanyLogos/${image.name}"), response.outputStream)
+    }
+
+    @Transactional
+    override fun addLogo(id: Int, file: MultipartFile): ApiResponse {
+
+        val find = repository.findById(id).orElseThrow { throw CompanyNotFound() }
+//        if (find.image != null) throw CompanyNotFound()
+        val image = SaveImage()
+        image.type = file.contentType
+        image.name = "${find.name}.${file.contentType!!.split("/")[1]}"
+        image.path = "F:\\CarSaleImages\\CompanyLogos/${image.name}"
+        imageRepository.save(image)
+        Files.copy(file.inputStream, Paths.get(image.path))
+        find.image = image
+        repository.save(find)
+        return ApiResponse()
+    }
+
+    @Transactional
+    override fun updateLogo(id: Int, file: MultipartFile): ApiResponse {
+        val find = repository.findById(id).orElseThrow { throw CompanyNotFound() }
+        val image = find.image!!
+        File(image.path).delete()
+        image.type = file.contentType
+        image.name = "${find.name}.${file.contentType!!.split("/")[1]}"
+        image.path = "F:\\CarSaleImages\\CompanyLogos/${image.name}"
+        imageRepository.save(image)
+        Files.copy(file.inputStream, Paths.get(image.path))
+        find.image = image
+        repository.save(find)
+        return ApiResponse()
     }
 }

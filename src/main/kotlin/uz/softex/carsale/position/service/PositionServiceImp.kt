@@ -1,6 +1,7 @@
 package uz.softex.carsale.position.service
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import uz.softex.carsale.payload.ApiResponse
 import uz.softex.carsale.payload.ApiResponseGeneric
 import uz.softex.carsale.position.entity.Position
@@ -40,11 +41,13 @@ class PositionServiceImp(
         return ApiResponse()
     }
 
+    @Transactional
     override fun updatePosition(positionDto: PositionDto): ApiResponse {
         val findById = repository.findById(positionDto.id).orElseThrow { throw PositionNotFound() }
+//        repository.deleteById(positionDto.id)
         findById.permissions = positionDto.permissions
         findById.name = positionDto.name
-        repository.save(findById)
+       repository.save(findById)
         return ApiResponse()
     }
 

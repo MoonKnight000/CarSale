@@ -2,6 +2,7 @@ package uz.softex.carsale.address.controller
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -18,7 +19,6 @@ import uz.softex.carsale.payload.ApiResponseGeneric
 @RestController
 @RequestMapping("/address")
 @SecurityRequirement(name = "javainuseapi")
-
 class AddressController(private val service: AddressService) {
     @GetMapping("/getAll")
     fun getAll(): ResponseEntity<ApiResponseGeneric<*>> {
@@ -35,16 +35,19 @@ class AddressController(private val service: AddressService) {
         return ResponseEntity.ok(service.getMyCompanyAddresses())
     }
 
+    @PreAuthorize(value = "hasAuthority('ADD_ADDRESS')")
     @PostMapping("/addAddress")
     fun addAddress(@RequestBody dto: AddressDto): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.addAddress(dto))
     }
 
+    @PreAuthorize(value = "hasAuthority('ADD_ADDRESS')")
     @PatchMapping("/updateAddress")
     fun updateAddress(@RequestBody dto: AddressDto): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.updateAddress(dto))
     }
 
+    @PreAuthorize(value = "hasAuthority('ADD_ADDRESS')")
     @DeleteMapping("/deleteById/{id}")
     fun deleteAddress(@PathVariable id: Int): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.deleteAddress(id))

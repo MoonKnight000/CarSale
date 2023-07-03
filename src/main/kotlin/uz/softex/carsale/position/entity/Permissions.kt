@@ -9,6 +9,16 @@ enum class Permissions {
     ENABLE_USERS,
 
     ADD_POSITION,
-    GET_POSITION
-
+    GET_POSITION,
+    DELETE_CAR_MODEL,
+    ADD_CAR_MODEL,
+    DELETE_CAR,
+    ADD_CAR,
+    ADD_CAR_PHOTO,
+    ADD_ADDRESS,
+    DELETE_CONTRACT,
+    BUY,
+    GET_CONTRACTS,
+    COMPANY,
+    UPDATE_COMPANY
 }

@@ -29,13 +29,14 @@ class JWTFilter(private val provider: JWTProvider, val authservice: UserDetailsS
                 if (provider.validateToken(header)) {
                     val usernameFromToken = provider.getUsernameFromToken(header)
                     val loadUserByUsername = authservice.loadUserByUsername(usernameFromToken)
-                    if(!loadUserByUsername.enabled) throw UserNotEnabled()
                     val usernamePasswordAuthenticationToken =
                         UsernamePasswordAuthenticationToken(loadUserByUsername,
                             null,
                             loadUserByUsername.authorities)
                     SecurityContextHolder.getContext().authentication = usernamePasswordAuthenticationToken
+                println(loadUserByUsername.position)
                 }
+
             }
             filterChain.doFilter(request, response)
 //        }

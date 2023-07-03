@@ -1,6 +1,5 @@
 package uz.softex.carsale.model.dto
 
-import ch.qos.logback.core.model.Model
 import uz.softex.carsale.model.entity.CarModel
 import uz.softex.carsale.model.entity.FuelType
 import uz.softex.carsale.model.entity.Transmission

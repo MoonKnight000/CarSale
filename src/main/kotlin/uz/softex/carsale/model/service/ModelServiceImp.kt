@@ -42,16 +42,19 @@ class ModelServiceImp(
 
 
     override fun addModel(modelDto: ModelDto): ApiResponse {
+        if (modelDto.company!! != authService.getCurrentUser().workCompany!!.id!!) throw CompanyNotFound()
         repository.save(
             CarModel(
                 modelDto,
-                companyRepository.findById(modelDto.company!!).orElseThrow { throw CompanyNotFound() })
+                authService.getCurrentUser().workCompany
+            )
         )
         return ApiResponse()
     }
 
     override fun updateModel(modelDto: ModelDto): ApiResponse {
-        val findById = repository.findById(modelDto.id!!).orElseThrow { throw CarModelNotFound() }
+        val findById = repository.findByIdAndCompanyId(modelDto.id!!, authService.getCurrentUser().workCompany!!.id!!)
+            .orElseThrow { throw CarModelNotFound() }
         findById.carSunroof = modelDto.carSunroof
         findById.name = modelDto.name
         findById.engine = modelDto.engine
@@ -59,12 +62,17 @@ class ModelServiceImp(
         findById.fuelType = modelDto.fuelType
         findById.seats = modelDto.seats
         findById.transmission = modelDto.transmission
+        findById.speed = modelDto.speed
         repository.save(findById)
         return ApiResponse()
     }
 
     override fun deleteModel(id: Int): ApiResponse {
-        if (!repository.existsById(id)) throw CarModelNotFound()
+        if (!repository.existsByIdAndCompanyId(
+                id,
+                authService.getCurrentUser().workCompany!!.id!!
+            )
+        ) throw CarModelNotFound()
         repository.deleteById(id)
         return ApiResponse()
     }
