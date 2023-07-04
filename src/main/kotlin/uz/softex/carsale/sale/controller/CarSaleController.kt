@@ -2,6 +2,7 @@ package uz.softex.carsale.sale.controller
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.servlet.http.HttpServletResponse
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -55,8 +56,12 @@ class CarSaleController(private val service: CarSaleService) {
     fun update(@RequestBody dto: SaleCarDto): ResponseEntity<ApiResponse> {
         return ResponseEntity.ok(service.update(dto))
     }
-    @GetMapping("/getMYCOntracts")
+    @GetMapping("/getMYContracts")
     fun getMyContracts(): ResponseEntity<ApiResponseGeneric<*>> {
         return ResponseEntity.ok(service.getMyContracts())
+    }
+    @PostMapping("/viewContract")
+    fun viewContract(@RequestBody @Valid dto: SaleCarDto,response: HttpServletResponse): ResponseEntity<ApiResponse> {
+        return ResponseEntity.ok(service.viewContract(dto,response))
     }
 }

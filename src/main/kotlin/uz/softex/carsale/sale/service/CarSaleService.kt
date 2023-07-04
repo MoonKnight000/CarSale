@@ -13,4 +13,5 @@ interface CarSaleService {
     fun delete(id: Int): ApiResponse
     fun contractToPdf(id: Int, response: HttpServletResponse): ApiResponse
     fun getMyContracts(): ApiResponseGeneric<*>
+    fun viewContract(dto: SaleCarDto,response: HttpServletResponse):ApiResponse
 }
