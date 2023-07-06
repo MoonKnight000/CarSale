@@ -3,8 +3,6 @@ package uz.softex.carsale.user.service
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import uz.softex.carsale.company.exception.CompanyNotFound
-import uz.softex.carsale.company.repository.CompanyRepository
 import uz.softex.carsale.payload.ApiResponse
 import uz.softex.carsale.payload.ApiResponseGeneric
 import uz.softex.carsale.position.exception.PositionNotFound

@@ -6,7 +6,6 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import uz.softex.carsale.config.AbstractEntity
-import uz.softex.carsale.position.entity.Permissions
 
 @Entity
 data class Position(

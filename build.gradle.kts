@@ -37,6 +37,13 @@ dependencies {
 
     implementation("javax.xml.bind:jaxb-api:2.3.1")
 
+
+    //web socket
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    // aop
+    implementation("org.springframework:spring-aop:6.0.10")
+
+
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

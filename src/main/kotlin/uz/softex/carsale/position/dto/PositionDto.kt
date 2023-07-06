@@ -6,5 +6,4 @@ class PositionDto(
     var id: Int,
     var name: String,
     var permissions: MutableList<Permissions>
-) {
-}
+)

@@ -30,5 +30,4 @@ abstract class AbstractEntity(
 //    @LastModifiedBy
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    val updatedByUser: Users? = null,
-
     )

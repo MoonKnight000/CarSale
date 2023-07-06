@@ -19,7 +19,6 @@ import uz.softex.carsale.user.service.AuthService
 import java.io.File
 import java.io.FileInputStream
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 
 @Service
@@ -76,7 +75,7 @@ class CompanyServiceImp(
     override fun getLogo(response: HttpServletResponse, companyId: Int) {
         val findById = repository.findById(companyId).orElseThrow { throw CompanyNotFound() }
         val image = findById.image
-        response.setHeader("Content-Disposition", "attachment; filename=\"${image!!.name}\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"${image!!.name}\"")
         response.contentType = image.type
         FileCopyUtils.copy(FileInputStream("F:\\CarSaleImages\\CompanyLogos/${image.name}"), response.outputStream)
     }
@@ -91,7 +90,7 @@ class CompanyServiceImp(
         image.name = "${find.name}.${file.contentType!!.split("/")[1]}"
         image.path = "F:\\CarSaleImages\\CompanyLogos/${image.name}"
         imageRepository.save(image)
-        Files.copy(file.inputStream, Paths.get(image.path))
+        Files.copy(file.inputStream, Paths.get(image.path!!))
         find.image = image
         repository.save(find)
         return ApiResponse()
@@ -101,12 +100,12 @@ class CompanyServiceImp(
     override fun updateLogo(id: Int, file: MultipartFile): ApiResponse {
         val find = repository.findById(id).orElseThrow { throw CompanyNotFound() }
         val image = find.image!!
-        File(image.path).delete()
+        File(image.path!!).delete()
         image.type = file.contentType
         image.name = "${find.name}.${file.contentType!!.split("/")[1]}"
         image.path = "F:\\CarSaleImages\\CompanyLogos/${image.name}"
         imageRepository.save(image)
-        Files.copy(file.inputStream, Paths.get(image.path))
+        Files.copy(file.inputStream, Paths.get(image.path!!))
         find.image = image
         repository.save(find)
         return ApiResponse()

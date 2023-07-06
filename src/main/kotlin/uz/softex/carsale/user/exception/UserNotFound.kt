@@ -1,5 +1,3 @@
 package uz.softex.carsale.user.exception
 
-class UserNotFound : Exception() {
-
-}
+class UserNotFound : Exception()

@@ -83,7 +83,7 @@ class CarServiceImp(
             image.name = "${find.id}($count).${it.contentType!!.split("/")[1]}"
             image.path = "F:\\CarSaleImages\\CarImages/${image.name}"
             imageRepository.save(image)
-            Files.copy(it.inputStream, Paths.get(image.path))
+            Files.copy(it.inputStream, Paths.get(image.path!!))
             find.images.add(image)
             count++
         }
@@ -100,7 +100,7 @@ class CarServiceImp(
             image.name = "${find.id}($count).${it.contentType!!.split("/")[1]}"
             image.path = "F:\\CarSaleImages\\CarImages/${image.name}"
             imageRepository.save(image)
-            Files.copy(it.inputStream, Paths.get(image.path))
+            Files.copy(it.inputStream, Paths.get(image.path!!))
             find.images.add(image)
             count++
         }
@@ -110,7 +110,7 @@ class CarServiceImp(
     override fun getCarPhoto(id: Int, response: HttpServletResponse) {
         val find = repository.findById(id).orElseThrow { throw CarNotFound() }
         find.images.forEach {
-            response.setHeader("Content-Disposition", "attachment; filename=\"${it!!.name}\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"${it.name}\"")
             response.contentType = it.type
             FileCopyUtils.copy(FileInputStream("F:\\CarSaleImages\\CarImages/${it.name}"), response.outputStream)
         }

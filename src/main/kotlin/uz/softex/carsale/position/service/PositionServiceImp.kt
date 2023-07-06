@@ -44,7 +44,6 @@ class PositionServiceImp(
     @Transactional
     override fun updatePosition(positionDto: PositionDto): ApiResponse {
         val findById = repository.findById(positionDto.id).orElseThrow { throw PositionNotFound() }
-//        repository.deleteById(positionDto.id)
         findById.permissions = positionDto.permissions
         findById.name = positionDto.name
        repository.save(findById)

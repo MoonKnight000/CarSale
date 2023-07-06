@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -80,5 +82,8 @@ class CarController(private val service: CarService) {
     fun getMYCompanyCars(): ResponseEntity<ApiResponseGeneric<*>> {
         return ResponseEntity.ok(service.getMyCompanyCars())
     }
+
+//    @MessageMapping("/message")
+//    @SendTo("topic/get")
 }
 

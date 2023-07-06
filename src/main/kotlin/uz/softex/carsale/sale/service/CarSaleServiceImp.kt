@@ -500,7 +500,7 @@ class CarSaleServiceImp(
         document.add(mainTable)
         document.close()
         //application/pdf
-        response.setHeader("Content-Disposition", "attachment; filename=\"copy.pdf\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"copy.pdf\"")
         response.contentType = "application/pdf"
         FileCopyUtils.copy(FileInputStream("F:\\CarSaleImages/copy.pdf"), response.outputStream)
         return ApiResponse()
@@ -929,7 +929,7 @@ class CarSaleServiceImp(
         document.add(mainTable)
         document.close()
         //application/pdf
-        response.setHeader("Content-Disposition", "attachment; filename=\"copy.pdf\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"copy.pdf\"")
         response.contentType = "application/pdf"
         FileCopyUtils.copy(FileInputStream("F:\\CarSaleImages/copy.pdf"), response.outputStream)
         return ApiResponse()

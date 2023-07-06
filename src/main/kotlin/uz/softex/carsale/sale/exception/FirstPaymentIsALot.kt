@@ -1,5 +1,3 @@
 package uz.softex.carsale.sale.exception
 
-class FirstPaymentIsALot(var string:String = "") : Exception(string) {
-
-}
+class FirstPaymentIsALot(var string:String = "") : Exception(string)

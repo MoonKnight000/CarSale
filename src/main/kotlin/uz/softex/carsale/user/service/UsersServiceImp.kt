@@ -64,10 +64,9 @@ class UsersServiceImp(
     }
 
     override fun updatePositionOfUser(dto: UsersDto): ApiResponse {
-        var orElseThrow: Users? = null
-        if (authService.getCurrentUser().position!!.name == "ProjectManager")
-            orElseThrow = repository.findById(dto.id!!).orElseThrow { throw UserNotFound() }
-        else orElseThrow =
+        val orElseThrow: Users? =if (authService.getCurrentUser().position!!.name == "ProjectManager")
+           repository.findById(dto.id!!).orElseThrow { throw UserNotFound() }
+        else
             repository.findByIdAndWorkCompanyId(dto.id!!, authService.getCurrentUser().workCompany!!.id!!)
                 .orElseThrow { throw UserNotFound() }
         orElseThrow!!.position = positionRepository.findById(dto.position!!).orElseThrow { throw PositionNotFound() }

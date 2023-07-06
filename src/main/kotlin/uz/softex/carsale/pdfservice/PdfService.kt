@@ -23,13 +23,6 @@ class PdfService {
         val imageData: ImageData = ImageDataFactory.create(path)
         var width1 = imageData.width
         var height1 = imageData.height
-//    var i = 1;
-//    while (width1 > width || height1 > height) {
-//        width1 = imageData.width / i
-//        height1 = imageData.height / i
-//        i++
-//    }
-
         if (width1 < height1) {
             val divide = height * 100 / height1
             height1 = height

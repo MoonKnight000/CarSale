@@ -19,5 +19,4 @@ class AuthController(private val service: AuthService) {
     fun signIp(@RequestBody dto: SignIn): ResponseEntity<ApiResponseGeneric<String>> {
         return ResponseEntity.ok(service.signIn(dto))
     }
-
 }

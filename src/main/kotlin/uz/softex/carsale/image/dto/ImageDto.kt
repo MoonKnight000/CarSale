@@ -5,5 +5,4 @@ class ImageDto(
     var path: String,
     var type: String,
     var name: String
-) {
-}
+)

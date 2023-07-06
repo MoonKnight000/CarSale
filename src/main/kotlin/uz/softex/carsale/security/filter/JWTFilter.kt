@@ -5,14 +5,10 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import uz.softex.carsale.user.exception.UserNotEnabled
 import uz.softex.carsale.user.service.UserDetailsServiceImp
-import java.util.HashSet
 
 @Component
 class JWTFilter(private val provider: JWTProvider, val authservice: UserDetailsServiceImp) :

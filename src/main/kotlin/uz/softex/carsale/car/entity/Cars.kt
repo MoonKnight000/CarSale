@@ -1,7 +1,6 @@
 package uz.softex.carsale.car.entity
 
 import jakarta.persistence.*
-import uz.softex.carsale.car.dto.CarDto
 import uz.softex.carsale.config.AbstractEntity
 import uz.softex.carsale.image.entity.SaveImage
 import uz.softex.carsale.model.entity.CarModel

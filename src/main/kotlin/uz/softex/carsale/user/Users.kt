@@ -23,9 +23,7 @@ data class Users(
     var workCompany: Company? = null,
     var enabled: Boolean = false
 ) : AbstractEntity(), UserDetails {
-    //    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-//        TODO("Not yet implemented")
-//    }
+
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         println(position)
         if (position != null) {

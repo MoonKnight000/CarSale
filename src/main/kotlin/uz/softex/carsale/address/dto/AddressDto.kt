@@ -6,6 +6,4 @@ class AddressDto(
     var city: String? = null,
     var street: String? = null,
     var houseNumber: Int? = null
-) {
-
-}
+)

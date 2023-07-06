@@ -1,10 +1,8 @@
 package uz.softex.carsale.handler
 
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.ObjectError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -22,7 +20,6 @@ import uz.softex.carsale.sale.exception.PhotoNotFound
 import uz.softex.carsale.user.exception.UserExists
 import uz.softex.carsale.user.exception.UserNotEnabled
 import uz.softex.carsale.user.exception.UserNotFound
-import java.util.function.Consumer
 
 @ControllerAdvice
 class Handler : ResponseEntityExceptionHandler() {
@@ -92,17 +89,10 @@ class Handler : ResponseEntityExceptionHandler() {
         println(ex)
         println(headers)
         println(request)
-        val bodyOfResponse = "name is empty"
         val allErrors = ex.bindingResult.allErrors
-//        allErrors.forEach(Consumer { i: ObjectError -> println(i.defaultMessage) })
-        var error = mutableListOf<String>()
+        val error = mutableListOf<String>()
         allErrors.forEach { error.add(it.defaultMessage.toString()) }
         return ResponseEntity.status(400).body(error)
-
-//        handleExceptionInternal(
-//            ex, bodyOfResponse,
-//            HttpHeaders(), HttpStatus.BAD_REQUEST, request
-//        )
     }
 }
 
